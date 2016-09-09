@@ -25,17 +25,13 @@ public class ToDoItemActivity extends AppCompatActivity {
     @BindView(R.id.fab)
     public FloatingActionButton mFabButton;
     @BindView(R.id.header)
-    public EditText mItemTitle;
+    public TextView mItemTitle;
     @BindView(R.id.editText)
     public EditText mEditText;
     @BindView(R.id.list_view)
     public ListView mListView;
-    private ArrayAdapter<String> mAdapter;
-    private ArrayList<String> mItems;
-    private String getItemsDescription;
-    int numbers = 0;
     int position;
-    String ITEM_DATA = "data";
+    private final String ITEM_DATA = "data";
 
 
     @Override
@@ -47,50 +43,23 @@ public class ToDoItemActivity extends AppCompatActivity {
         String itemText = getIntent().getStringExtra(ITEM_DATA);
         position = getIntent().getIntExtra("position", 0);
         mItemTitle.setText(itemText);
-        mItemTitle.setSelection(itemText.length());
 
-        setAdapter();
         editText();
-        deleteToDoItems();
     }
 
-
-    private void setAdapter() {
-        mItems = new ArrayList<>();
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mItems);
-        mListView.setAdapter(mAdapter);
-    }
 
     private void editText() {
         mFabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getItemsDescription = mEditText.getText().toString();
+                String getItemsDescription = mEditText.getText().toString();
                 mEditText.setText("");
-                mItems.add(++numbers + " " + getItemsDescription);
-                mAdapter.notifyDataSetChanged();
+                mItemTitle.setText(getItemsDescription);
 
             }
         });
     }
 
-    private void deleteToDoItems() {
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if (position == mItems.size() - 1) {
-                    mItems.remove(position);
-                    numbers--;
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(ToDoItemActivity.this, R.string.delete_entry, Toast.LENGTH_SHORT).show();
-                }
-
-                return false;
-            }
-        });
-    }
 
     public void onEditItem() {
         Intent data = new Intent();
