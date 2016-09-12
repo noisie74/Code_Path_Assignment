@@ -18,7 +18,7 @@ Completed user stories:
 <html>
 <body>
 <p>
-<img src="http://imgur.com/a/zAbne" width = "250" height = "400">
+<img src="[img]http://i.imgur.com/ttAuQNR.gif[/img]" width = "250" height = "400">
 </p>
 </body>
 </html>
