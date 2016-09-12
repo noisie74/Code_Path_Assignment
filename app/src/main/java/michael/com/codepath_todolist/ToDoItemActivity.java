@@ -30,8 +30,7 @@ public class ToDoItemActivity extends AppCompatActivity {
     public EditText mEditText;
     @BindView(R.id.list_view)
     public ListView mListView;
-    int position;
-    private final String ITEM_DATA = "data";
+    private int position;
 
 
     @Override
@@ -40,8 +39,8 @@ public class ToDoItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_to_do_item);
         ButterKnife.bind(this);
 
-        String itemText = getIntent().getStringExtra(ITEM_DATA);
-        position = getIntent().getIntExtra("position", 0);
+        String itemText = getIntent().getStringExtra(MainActivity.ITEM_DATA);
+        position = getIntent().getIntExtra(MainActivity.POSITION, 0);
         mItemTitle.setText(itemText);
 
         editText();
@@ -52,9 +51,12 @@ public class ToDoItemActivity extends AppCompatActivity {
         mFabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String getItemsDescription = mEditText.getText().toString();
-                mEditText.setText("");
-                mItemTitle.setText(getItemsDescription);
+                if (!mEditText.getText().toString().isEmpty()) {
+                    String getItemsDescription = mEditText.getText().toString();
+                    mEditText.setText("");
+                    mItemTitle.setText(getItemsDescription);
+                    onEditItem();
+                }
 
             }
         });
@@ -63,14 +65,13 @@ public class ToDoItemActivity extends AppCompatActivity {
 
     public void onEditItem() {
         Intent data = new Intent();
-        data.putExtra("editedItemText", mItemTitle.getText().toString());
-        data.putExtra("position", position);
+        data.putExtra(MainActivity.EDITED_TEXT, mItemTitle.getText().toString());
+        data.putExtra(MainActivity.POSITION, position);
         setResult(RESULT_OK, data);
     }
 
     @Override
     public void onBackPressed() {
-        onEditItem();
         super.onBackPressed();
     }
 }
