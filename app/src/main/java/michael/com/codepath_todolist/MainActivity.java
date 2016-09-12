@@ -6,9 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> mAdapter;
     private ArrayList<String> mToDoItems;
     private final int ITEM_REQUEST = 1;
-    private final String ITEM_DATA = "data";
+    public static final String ITEM_DATA = "data";
+    public static final String EDITED_TEXT = "editedItemText";
+    public static final String POSITION = "position";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (data != null) {
 
-                String itemText = data.getExtras().getString("editedItemText");
-                int position = data.getExtras().getInt("position");
+                String itemText = data.getExtras().getString(EDITED_TEXT);
+                int position = data.getExtras().getInt(POSITION);
                 mToDoItems.set(position, itemText);
                 mAdapter.notifyDataSetChanged();
                 saveToDoItems();
